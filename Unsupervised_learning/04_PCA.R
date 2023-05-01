@@ -116,28 +116,3 @@ cowplot::plot_grid(pca_1_g, pca_2_g, ncol = 2)
 
 
 
-##################### 5주차 - 2 ########################
-###               요인분석 맛보기                    ###
-########################################################
-
-
-## 1. 주성분분석의 공분산행렬의 분산을 회귀분석의 설명계수로 대체하여 요인 추출
-pima_ex <- pima[c("pregnant", "age")]
-apply(pima_ex, 2, sd)
-cov(pima_ex)
-
-fit1 <- lm(pima_ex$pregnant ~ pima_ex$age)
-fit2 <- lm(pima_ex$age ~ pima_ex$pregnant)
-
-fit1_res <- summary(fit1)
-summary(fit2)
-
-
-## 2. 업데이트된 공분산행렬의 고유값과 고유벡터 구하기
-step1_mat <- matrix(c(fit1_res$r.squared, cov(pima_ex)[2], cov(pima_ex)[2], fit1_res$r.squared), 
-                    ncol = 2, byrow = FALSE)
-
-eigen(step1_mat)   
-
-
-
